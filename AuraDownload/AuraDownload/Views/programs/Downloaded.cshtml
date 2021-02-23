@@ -1,0 +1,96 @@
+﻿@using AuraDownload.Models
+@model KategoriProgramList
+
+@{
+    ViewBag.Title = "İndirdiklerim | Aura Download";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<title> @ViewBag.Title</title>
+@Html.Raw(TempData["alert"])
+<!--================ Program Alanı =================-->
+<section class="blog_area single-post-area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 posts-list">
+                <div class="single-post">
+                    <div class="blog_details">
+
+                        <h1> İndirdiklerim </h1>
+
+
+                        @if (Model.Indirilenler.Where(i => i.user_id == Convert.ToInt32(Session["user_id"])).Count() != 0)
+                        {
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"> Program Adı</th>
+                                        <th> </th>
+                                        <th style="text-align:center"> Listeden Sil </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var d in Model.Indirilenler.Where(i => i.user_id == Convert.ToInt32(Session["user_id"])))
+                                    {
+                                        <tr>
+                                            <td><img src="~/Template/img/programs/@d.program.iconS" / style="margin-right:10px;"> <a href="/programs/Details/@d.program.program_id"> @d.program.program_name </a> </td>
+                                            <td></td>
+                                            <td style="text-align:center;"> <a href="/programs/deleteDownloaded/@d.program.program_id"> <i class="btn btn-danger ti-close"></i> </a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+
+                        else
+                        {
+                            <div class="alert alert-danger">
+                                Henüz bir program indirilmemiş. İndirildiyse de bu listeden silinmiş...
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+            <!--Kategoriler-->
+            <div class="col-lg-4">
+                <div class="blog_right_sidebar">
+                    <aside class="single_sidebar_widget post_category_widget">
+                        <h4 class="widget_title">Kategoriler</h4>
+                        <ul class="list cat-list">
+                            @foreach (var item in Model.Kategoriler.Take(4))
+                            {
+                                <li>
+                                    <a href="/categories/Details/@item.category_id" class="d-flex">
+                                        <p> @item.category_name </p>
+                                    </a>
+                                </li>
+                            }
+
+                        </ul>
+                    </aside>
+                    <!--Kategoriler End -->
+                    <!-- En Çok İndirilen-->
+                    <aside class="single_sidebar_widget post_category_widget">
+                        <h4 class="widget_title">En Çok İndirilenler</h4>
+                        <ul class="list cat-list">
+                            @foreach (var item in Model.Programlar.OrderByDescending(p => p.download_count).Take(4))
+                            {
+                                <li>
+                                    <a href="/programs/details/@item.program_id" class="d-flex">
+                                        <img src="~/Template/img/programs/@item.iconS">
+                                        <p style="margin-left: 10px;margin-top: 5px;">@item.program_name</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </aside>
+                    <!-- En Çok İndirilen End-->
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+<!--================ Program Alanı end =================-->

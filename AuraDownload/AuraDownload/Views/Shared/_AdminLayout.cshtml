@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="~/AdminTemplate/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="~/AdminTemplate/vendors/base/vendor.bundle.base.css">
+    <link rel="stylesheet" href="~/AdminTemplate/css/style.css">
+
+    <link rel="shortcut icon" href="~/AdminTemplate/images/favicon.png" />
+</head>
+<body>
+    <div class="container-scroller">
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo mr-5" href="/admin/kullanicilar"><img src="~/AdminTemplate/images/icon.png" class="mr-2" alt="logo" /></a>
+                <a class="navbar-brand brand-logo-mini" href="/admin/kullanicilar"><img src="~/AdminTemplate/images/icon-mini.png" alt="logo" /></a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="ti-view-list"></span>
+                </button>
+                <ul class="navbar-nav navbar-nav-right">
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="ti-view-list"></span>
+                </button>
+                <a class="btn btn-dark" href="/"> Siteye Dön </a>
+            </div>
+           
+        </nav>
+
+        <!-- Sol Menü -->
+        <div class="container-fluid page-body-wrapper">
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/kullanicilar">
+                            <i class="ti-user menu-icon"></i>
+                            <span class="menu-title">Kullanıcılar</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/kategoriler">
+                            <i class="ti-microsoft menu-icon"></i>
+                            <span class="menu-title">Kategoriler</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/yorumlar">
+                            <i class="ti-comment menu-icon"></i>
+                            <span class="menu-title">Yorumlar</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/programlar">
+                            <i class="ti-package menu-icon"></i>
+                            <span class="menu-title">Programlar</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            @RenderBody()
+
+
+
+        </div>
+        <!-- Sol Menü End -->
+    </div>
+
+    <!-- Javascript -->
+    <script src="~/AdminTemplate/vendors/base/vendor.bundle.base.js"></script>
+    <script src="~/AdminTemplate/vendors/chart.js/Chart.min.js"></script>
+    <script src="~/AdminTemplate/js/off-canvas.js"></script>
+    <script src="~/AdminTemplate/js/hoverable-collapse.js"></script>
+    <script src="~/AdminTemplate/js/template.js"></script>
+    <script src="~/AdminTemplate/js/todolist.js"></script>
+    <script src="~/AdminTemplate/js/dashboard.js"></script>
+
+</body>
+
+</html>
+

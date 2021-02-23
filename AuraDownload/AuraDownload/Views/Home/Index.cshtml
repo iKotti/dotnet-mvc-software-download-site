@@ -1,0 +1,133 @@
+﻿@using AuraDownload.Models
+@model KategoriProgramList
+@{
+    ViewBag.Title = "Anasayfa | Aura Download";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<title> @ViewBag.Title</title>
+@Html.Raw(TempData["alert"])
+<!-- AuraDownload'a Hoşgeldiniz-->
+<div class="welcome_protomedia">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-6 col-md-6">
+                <h3>
+                    Aura Download'a <br>
+
+                    @if (Session["username"] == null)
+                    {
+                        <h3> hoşgeldiniz </h3>
+                    }
+                    else
+                    {
+                        <h3> hoşgeldin <a href="#"> @Session["username"].ToString() </a> ! </h3>
+                    }
+
+                </h3>
+            </div>
+            <div class="col-xl-6 col-md-6">
+                <div class="add_here">
+                    <a href="/programs/Details/32">
+                        <img src="~/Template/img/programs/photoscape.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- AuraDownload'a Hoşgeldiniz end -->
+<!-- Tavsiye Ettiklerimiz -->
+<div class="container">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="section_title mb-33">
+                <a href="#"> <h3>Tavsiye Ettiklerimiz</h3> </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="photographi_area">
+    <div class="container">
+        <div class="row">
+            <!-- Tavsiye 1 -->
+            <div class="col-xl-6 col-md-6">
+                <div class="single_photography photography_bg_1">
+                    <div class="info">
+                        <div class="info_inner">
+                            <h3>
+                                <a>
+                                    Hızlı, güvenilir <br>
+                                    İnternet Tarayıcısı
+                                </a>
+                            </h3>
+                            <div class="date_catagory d-flex align-items-center justify-content-between">
+                                <span></span>
+                                <a class="genric-btn warning radius" href="programs/Details/31"> Görüntüle </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Tavsiye 1 End -->
+            <!--Tavsiye 2-->
+            <div class="col-xl-6 col-md-6">
+                <div class="single_photography photography_bg_2">
+                    <div class="info">
+                        <div class="info_inner">
+                            <h3>
+                                <a>
+                                    Basit, kullanışlı <br>
+                                    Medya Oynatıcı
+                                </a>
+                            </h3>
+                            <div class="date_catagory d-flex align-items-center justify-content-between">
+                                <span></span>
+                                <a class="genric-btn warning radius" href="programs/Details/15"> Görüntüle </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Tavsiye 2 End-->
+        </div>
+    </div>
+</div>
+<!-- Tavsiye Ettiklerimiz End-->
+<!-- Kategoriler-->
+@foreach (var kategori in Model.Kategoriler.Take(3))
+{
+    <div class="photography_slider_area">
+        <div class="container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="section_title mb-33">
+                            <a href="/categories/Details/@kategori.category_id"> <h3>@kategori.category_name</h3> </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="photoslider_active owl-carousel">
+                        @foreach (var program in Model.Programlar.Where(p => p.category_id == kategori.category_id).Take(10))
+                        {
+                            <div class="single_photography">
+                                <img src="~/Template/img/programs/@program.iconL" alt="">
+                                <div class="photo_title">
+                                    <a href="/programs/Details/@program.program_id">
+                                        <h4> @program.program_name </h4>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Kategori 1 end -->
+}
+<!-- Kategoriler End-->

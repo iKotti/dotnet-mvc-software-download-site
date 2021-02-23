@@ -1,0 +1,101 @@
+﻿@model AuraDownload.Models.program
+
+@{
+    ViewBag.Title = "Program Ekle | Admin Paneli | Aura Download";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<title> @ViewBag.Title</title>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            @Html.Raw(TempData["alert"])
+            <h3 class="card-title"> PROGRAMLAR / PROGRAM EKLE</h3>
+            <HR>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div class="col-6 col-md-6">
+
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="program_name"> Program Adı </label>
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" id="program_name" name="program_name" type="text" value="" required="required">
+                                    @Html.ValidationMessageFor(model => model.program_name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="explanation"> Açıklama </label>
+                                <div class="col-md-10">
+                                    <textarea class="form-control text-box single-line" id="explanation" name="explanation" type="text" value="" rows="15" required="required"></textarea>
+                                    @Html.ValidationMessageFor(model => model.explanation, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="category_id"> Kategori </label>
+                                <div class="col-md-10">
+                                    @Html.DropDownList("category_id", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="link64"> Program Linki [64-Bit] </label>
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" id="link64" name="link64" type="text" value="" required="required">
+                                    @Html.ValidationMessageFor(model => model.link64, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="link32"> Program Linki (32-Bit) </label>
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" id="link32" name="link32" type="text" value="" required="required">
+                                    @Html.ValidationMessageFor(model => model.link32, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="iconS"> Program Icon (Small) </label>
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" id="iconS" name="iconS" type="text" placeholder="Örnek: chromeS.png" required="required">
+                                    @Html.ValidationMessageFor(model => model.iconS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="iconM"> Program Icon (Medium) </label>
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" id="iconM" name="iconM" type="text" placeholder="Örnek: chromeM.png" required="required">
+                                    @Html.ValidationMessageFor(model => model.iconM, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="iconL"> Program Icon (Large) </label>
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" id="iconL" name="iconL" type="text" placeholder="Örnek: chromeL.png" required="required">
+                                    @Html.ValidationMessageFor(model => model.iconL, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Program Ekle" class="btn btn-success" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+
+

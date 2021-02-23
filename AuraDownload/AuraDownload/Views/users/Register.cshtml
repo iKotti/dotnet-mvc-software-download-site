@@ -1,0 +1,71 @@
+﻿@model AuraDownload.Models.user
+
+@{
+    ViewBag.Title = "Kayıt Ol | Aura Download";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<title> @ViewBag.Title</title>
+
+    <div class="row">
+        <div class="col-6 col-md-4"></div>
+        <div class="col-6 col-md-4">
+            <h2> Kayıt Ol</h2>
+            @Html.Raw(TempData["alert"])
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label class="control-label col-md-5" for="name_surname">Ad Soyad</label>
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" id="name_surname" name="name_surname" type="text" required="required">
+                        @Html.ValidationMessageFor(model => model.name_surname, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-10" for="username">Kullanıcı Adı</label>
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" id="username" name="username" type="text" value="" required="required">
+                        @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-10" for="mail">E-Mail</label>
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" id="mail" name="mail" type="email" value="" required>
+                        @Html.ValidationMessageFor(model => model.mail, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-10" for="password">Şifre</label>
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" id="password" name="password" type="password" value="" required>
+                        @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-10" for="password">Şifre Onayla</label>
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" id="confirmPassword" name="confirmPassword" type="password" value="" required>
+                        @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Kayıt Ol" class="btn btn-success" /><span style="font-size:small;float:right;">Zaten bir hesabın var mı?<a href="/users/Login"> Giriş Yap</a> </span>
+                    </div>
+                </div>
+
+
+            }
+        </div>
+        <div class="col-6 col-md-4"></div>
+    </div>
+

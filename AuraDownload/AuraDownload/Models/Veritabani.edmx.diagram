@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="521c4f984dac4f429906d2bc201e7d73" Name="Diagram1">
+        <EntityTypeShape EntityType="AuraDownloadModel.category" Width="1.5" PointX="3.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AuraDownloadModel.comment" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AuraDownloadModel.downloaded" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AuraDownloadModel.favourite" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AuraDownloadModel.program" Width="1.5" PointX="6" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AuraDownloadModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AuraDownloadModel.user" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <AssociationConnector Association="AuraDownloadModel.FK_program_category" ManuallyRouted="false" />
+        <AssociationConnector Association="AuraDownloadModel.FK_comment_program" ManuallyRouted="false" />
+        <AssociationConnector Association="AuraDownloadModel.FK_comment_user" ManuallyRouted="false" />
+        <AssociationConnector Association="AuraDownloadModel.FK_downloaded_program" ManuallyRouted="false" />
+        <AssociationConnector Association="AuraDownloadModel.FK_downloaded_user" ManuallyRouted="false" />
+        <AssociationConnector Association="AuraDownloadModel.FK_favourite_program" ManuallyRouted="false" />
+        <AssociationConnector Association="AuraDownloadModel.FK_favourite_user" ManuallyRouted="false" />
+        <AssociationConnector Association="AuraDownloadModel.FK_program_user" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

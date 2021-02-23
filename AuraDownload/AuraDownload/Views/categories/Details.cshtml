@@ -1,0 +1,91 @@
+﻿@using AuraDownload.Models
+@model KategoriProgramList
+
+@{
+    ViewBag.Title = Model.kategori.category_name + " Kategorisi | Aura Download";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<title> @ViewBag.Title</title>
+<section class="blog_area single-post-area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 posts-list">
+                <div class="single-post">
+                    <div class="blog_details">
+
+                        <h1> <span style="color:orangered"> Kategori: </span>@Model.kategori.category_name </h1>
+                        <hr>
+
+                        @{
+                            int prgSayisi = Model.Programlar.Where(p => p.category_id == Model.kategori.category_id).Count();
+                        }
+
+                        @if (prgSayisi > 0)
+                        {
+                            foreach (var prg in Model.Programlar.Where(p => p.category_id == Model.kategori.category_id))
+                            {
+                                <div class="card" style="width: 10rem;float: left;margin-right: 15px;margin-top: 10px;">
+                                    <img class="card-img-top" src="~/Template/img/programs/@prg.iconM" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h3 class="card-title" style="text-align: center;">
+                                            <a href="/programs/details/@prg.program_id">
+                                                <p>@prg.program_name </p>
+                                            </a>
+                                        </h3>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+                        else
+                        {
+                            <div class="alert alert-danger" style="border:1px solid"> Henüz bu kategoride program bulunmuyor. </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-4">
+                <div class="blog_right_sidebar">
+                    <aside class="single_sidebar_widget post_category_widget">
+                        <!--Diğer Kategoriler-->
+                        <h4 class="widget_title">Diğer Kategoriler</h4>
+                        <ul class="list cat-list">
+                            @foreach (var ktg in Model.Kategoriler.Where(c => c.category_id != Model.kategori.category_id))
+                            {
+                                <li>
+                                    <a href="/categories/details/@ktg.category_id" class="d-flex">
+                                        <p>@ktg.category_name</p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </aside>
+                    <!-- Diğer Kategoriler End -->
+                    <!-- En Çok İndirilen-->
+                    <aside class="single_sidebar_widget post_category_widget">
+                        <h4 class="widget_title">En Çok İndirilenler</h4>
+                        <ul class="list cat-list">
+
+                            @foreach (var prg in Model.Programlar.OrderByDescending(p => p.download_count).Take(5))
+                            {
+                                <li>
+                                    <a href="/programs/details/@prg.program_id" class="d-flex">
+                                        <img src="~/Template/img/programs/@prg.iconS">
+                                        <p style="margin-left: 10px;margin-top: 5px;">@prg.program_name</p>
+                                    </a>
+                                </li>
+                            }
+
+                        </ul>
+                    </aside>
+                    <!-- En Çok İndirilen End-->
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>

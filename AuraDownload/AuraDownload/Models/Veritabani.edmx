@@ -1,0 +1,568 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AuraDownloadModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="category_id" />
+          </Key>
+          <Property Name="category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category_name" Type="nchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="comment">
+          <Key>
+            <PropertyRef Name="comment_id" />
+          </Key>
+          <Property Name="comment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="program_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="comment_content" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="comment_time" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="downloaded">
+          <Key>
+            <PropertyRef Name="downloaded_id" />
+          </Key>
+          <Property Name="downloaded_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="program_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="favourite">
+          <Key>
+            <PropertyRef Name="favourite_id" />
+          </Key>
+          <Property Name="favourite_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="program_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="program">
+          <Key>
+            <PropertyRef Name="program_id" />
+          </Key>
+          <Property Name="program_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="program_name" Type="nchar" MaxLength="40" Nullable="false" />
+          <Property Name="category_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="download_count" Type="int" Nullable="false" />
+          <Property Name="explanation" Type="nvarchar" MaxLength="1000" />
+          <Property Name="link64" Type="nvarchar" MaxLength="200" />
+          <Property Name="link32" Type="nvarchar" MaxLength="200" />
+          <Property Name="iconS" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="iconM" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="iconL" Type="nvarchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_surname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mail" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="user_type" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_comment_program">
+          <End Role="program" Type="Self.program" Multiplicity="1" />
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="program">
+              <PropertyRef Name="program_id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="program_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comment_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_downloaded_program">
+          <End Role="program" Type="Self.program" Multiplicity="1" />
+          <End Role="downloaded" Type="Self.downloaded" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="program">
+              <PropertyRef Name="program_id" />
+            </Principal>
+            <Dependent Role="downloaded">
+              <PropertyRef Name="program_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_downloaded_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="downloaded" Type="Self.downloaded" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="downloaded">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_favourite_program">
+          <End Role="program" Type="Self.program" Multiplicity="1" />
+          <End Role="favourite" Type="Self.favourite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="program">
+              <PropertyRef Name="program_id" />
+            </Principal>
+            <Dependent Role="favourite">
+              <PropertyRef Name="program_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_favourite_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="favourite" Type="Self.favourite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="favourite">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_program_category">
+          <End Role="category" Type="Self.category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="program" Type="Self.program" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="category_id" />
+            </Principal>
+            <Dependent Role="program">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_program_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="program" Type="Self.program" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="program">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AuraDownloadModelStoreContainer">
+          <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="comment" EntityType="Self.comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="downloaded" EntityType="Self.downloaded" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="favourite" EntityType="Self.favourite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="program" EntityType="Self.program" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_comment_program" Association="Self.FK_comment_program">
+            <End Role="program" EntitySet="program" />
+            <End Role="comment" EntitySet="comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comment_user" Association="Self.FK_comment_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="comment" EntitySet="comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_downloaded_program" Association="Self.FK_downloaded_program">
+            <End Role="program" EntitySet="program" />
+            <End Role="downloaded" EntitySet="downloaded" />
+          </AssociationSet>
+          <AssociationSet Name="FK_downloaded_user" Association="Self.FK_downloaded_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="downloaded" EntitySet="downloaded" />
+          </AssociationSet>
+          <AssociationSet Name="FK_favourite_program" Association="Self.FK_favourite_program">
+            <End Role="program" EntitySet="program" />
+            <End Role="favourite" EntitySet="favourite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_favourite_user" Association="Self.FK_favourite_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="favourite" EntitySet="favourite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_program_category" Association="Self.FK_program_category">
+            <End Role="category" EntitySet="category" />
+            <End Role="program" EntitySet="program" />
+          </AssociationSet>
+          <AssociationSet Name="FK_program_user" Association="Self.FK_program_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="program" EntitySet="program" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AuraDownloadModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="category_id" />
+          </Key>
+          <Property Name="category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category_name" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="program" Relationship="Self.FK_program_category" FromRole="category" ToRole="program" />
+        </EntityType>
+        <EntityType Name="comment">
+          <Key>
+            <PropertyRef Name="comment_id" />
+          </Key>
+          <Property Name="program_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="comment_content" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="comment_time" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="program" Relationship="Self.FK_comment_program" FromRole="comment" ToRole="program" />
+          <NavigationProperty Name="user" Relationship="Self.FK_comment_user" FromRole="comment" ToRole="user" />
+          <Property Name="comment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="downloaded">
+          <Key>
+            <PropertyRef Name="downloaded_id" />
+          </Key>
+          <Property Name="downloaded_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="program_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="program" Relationship="Self.FK_downloaded_program" FromRole="downloaded" ToRole="program" />
+          <NavigationProperty Name="user" Relationship="Self.FK_downloaded_user" FromRole="downloaded" ToRole="user" />
+        </EntityType>
+        <EntityType Name="favourite">
+          <Key>
+            <PropertyRef Name="favourite_id" />
+          </Key>
+          <Property Name="favourite_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="program_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="program" Relationship="Self.FK_favourite_program" FromRole="favourite" ToRole="program" />
+          <NavigationProperty Name="user" Relationship="Self.FK_favourite_user" FromRole="favourite" ToRole="user" />
+        </EntityType>
+        <EntityType Name="program">
+          <Key>
+            <PropertyRef Name="program_id" />
+          </Key>
+          <Property Name="program_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="program_name" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="category_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="download_count" Type="Int32" Nullable="false" />
+          <Property Name="link64" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="link32" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="iconS" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="iconM" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="iconL" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="category" Relationship="Self.FK_program_category" FromRole="program" ToRole="category" />
+          <NavigationProperty Name="comment" Relationship="Self.FK_comment_program" FromRole="program" ToRole="comment" />
+          <NavigationProperty Name="downloaded" Relationship="Self.FK_downloaded_program" FromRole="program" ToRole="downloaded" />
+          <NavigationProperty Name="favourite" Relationship="Self.FK_favourite_program" FromRole="program" ToRole="favourite" />
+          <NavigationProperty Name="user" Relationship="Self.FK_program_user" FromRole="program" ToRole="user" />
+          <Property Name="explanation" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mail" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="comment" Relationship="Self.FK_comment_user" FromRole="user" ToRole="comment" />
+          <NavigationProperty Name="downloaded" Relationship="Self.FK_downloaded_user" FromRole="user" ToRole="downloaded" />
+          <NavigationProperty Name="favourite" Relationship="Self.FK_favourite_user" FromRole="user" ToRole="favourite" />
+          <NavigationProperty Name="program" Relationship="Self.FK_program_user" FromRole="user" ToRole="program" />
+          <Property Name="user_type" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_program_category">
+          <End Role="category" Type="Self.category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="program" Type="Self.program" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="category_id" />
+            </Principal>
+            <Dependent Role="program">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comment_program">
+          <End Role="program" Type="Self.program" Multiplicity="1" />
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="program">
+              <PropertyRef Name="program_id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="program_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comment_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_downloaded_program">
+          <End Role="program" Type="Self.program" Multiplicity="1" />
+          <End Role="downloaded" Type="Self.downloaded" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="program">
+              <PropertyRef Name="program_id" />
+            </Principal>
+            <Dependent Role="downloaded">
+              <PropertyRef Name="program_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_downloaded_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="downloaded" Type="Self.downloaded" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="downloaded">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_favourite_program">
+          <End Role="program" Type="Self.program" Multiplicity="1" />
+          <End Role="favourite" Type="Self.favourite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="program">
+              <PropertyRef Name="program_id" />
+            </Principal>
+            <Dependent Role="favourite">
+              <PropertyRef Name="program_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_favourite_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="favourite" Type="Self.favourite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="favourite">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_program_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="program" Type="Self.program" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="program">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AuraDownloadEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="category" EntityType="Self.category" />
+          <EntitySet Name="comment" EntityType="Self.comment" />
+          <EntitySet Name="downloaded" EntityType="Self.downloaded" />
+          <EntitySet Name="favourite" EntityType="Self.favourite" />
+          <EntitySet Name="program" EntityType="Self.program" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="user" EntityType="Self.user" />
+          <AssociationSet Name="FK_program_category" Association="Self.FK_program_category">
+            <End Role="category" EntitySet="category" />
+            <End Role="program" EntitySet="program" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comment_program" Association="Self.FK_comment_program">
+            <End Role="program" EntitySet="program" />
+            <End Role="comment" EntitySet="comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comment_user" Association="Self.FK_comment_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="comment" EntitySet="comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_downloaded_program" Association="Self.FK_downloaded_program">
+            <End Role="program" EntitySet="program" />
+            <End Role="downloaded" EntitySet="downloaded" />
+          </AssociationSet>
+          <AssociationSet Name="FK_downloaded_user" Association="Self.FK_downloaded_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="downloaded" EntitySet="downloaded" />
+          </AssociationSet>
+          <AssociationSet Name="FK_favourite_program" Association="Self.FK_favourite_program">
+            <End Role="program" EntitySet="program" />
+            <End Role="favourite" EntitySet="favourite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_favourite_user" Association="Self.FK_favourite_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="favourite" EntitySet="favourite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_program_user" Association="Self.FK_program_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="program" EntitySet="program" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AuraDownloadModelStoreContainer" CdmEntityContainer="AuraDownloadEntities">
+          <EntitySetMapping Name="category">
+            <EntityTypeMapping TypeName="AuraDownloadModel.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="comment">
+            <EntityTypeMapping TypeName="AuraDownloadModel.comment">
+              <MappingFragment StoreEntitySet="comment">
+                <ScalarProperty Name="comment_id" ColumnName="comment_id" />
+                <ScalarProperty Name="program_id" ColumnName="program_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="comment_content" ColumnName="comment_content" />
+                <ScalarProperty Name="comment_time" ColumnName="comment_time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="downloaded">
+            <EntityTypeMapping TypeName="AuraDownloadModel.downloaded">
+              <MappingFragment StoreEntitySet="downloaded">
+                <ScalarProperty Name="downloaded_id" ColumnName="downloaded_id" />
+                <ScalarProperty Name="program_id" ColumnName="program_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="favourite">
+            <EntityTypeMapping TypeName="AuraDownloadModel.favourite">
+              <MappingFragment StoreEntitySet="favourite">
+                <ScalarProperty Name="favourite_id" ColumnName="favourite_id" />
+                <ScalarProperty Name="program_id" ColumnName="program_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="program">
+            <EntityTypeMapping TypeName="AuraDownloadModel.program">
+              <MappingFragment StoreEntitySet="program">
+                <ScalarProperty Name="explanation" ColumnName="explanation" />
+                <ScalarProperty Name="program_id" ColumnName="program_id" />
+                <ScalarProperty Name="program_name" ColumnName="program_name" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="download_count" ColumnName="download_count" />
+                <ScalarProperty Name="link64" ColumnName="link64" />
+                <ScalarProperty Name="link32" ColumnName="link32" />
+                <ScalarProperty Name="iconS" ColumnName="iconS" />
+                <ScalarProperty Name="iconM" ColumnName="iconM" />
+                <ScalarProperty Name="iconL" ColumnName="iconL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="AuraDownloadModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="AuraDownloadModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="user_type" ColumnName="user_type" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="name_surname" ColumnName="name_surname" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

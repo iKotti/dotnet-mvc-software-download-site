@@ -1,0 +1,177 @@
+﻿@using AuraDownload.Models
+@model KategoriProgramList
+
+
+@{
+    ViewBag.Title = Model.program.program_name + " | Aura Download";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<title> @ViewBag.Title</title>
+@Html.Raw(TempData["alert"])
+<section class="blog_area single-post-area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 posts-list">
+                <div class="single-post">
+                    <div class="section-top-border">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="~/Template/img/programs/@Model.program.iconM" alt="" class="img-fluid">
+                            </div>
+                            <div class="col-md-9 mt-sm-20">
+                                <button onclick="window.location = '/programs/linkTiklandi64/@Model.program.program_id';" class="genric-btn primary radius" style="float: right;"> İndir 64Bit</button>
+                                <button onclick="window.location = '/programs/linkTiklandi32/@Model.program.program_id';" class="genric-btn primary radius" style="float: right;margin-right: 15px;">
+                                    İndir
+                                    32Bit
+                                </button>
+
+                                <h2> @Model.program.program_name </h2>
+                                <p> <b style="color:#000000"> Yükleyen : </b> @Model.program.user.name_surname [@Model.program.user.username]</p>
+                                <p> <b style="color:#000000"> İndirilme Sayısı :  </b> @Model.program.download_count</p>
+                                @if (Session["username"] != null)
+                                {
+                                    if (Model.Favoriler.Where(f => f.program_id == Model.program.program_id && f.user_id == Convert.ToInt32(Session["user_id"])).FirstOrDefault() != null)
+                                    {
+                                        <p> <b> <a id="favori" href="/programs/deleteFavourite/@Model.program.program_id"><i class="ti-heart-broken"> Favorilerden Çıkar </i> </a></b></p>
+                                    }
+                                    else
+                                    {
+                                        <p> <b> <a id="favori" href="/programs/addFavourite/@Model.program.program_id"><i class="ti-heart"> Favorilere Ekle </i> </a></b></p>
+                                    }
+
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="blog_details">
+                        <p>
+                            @Model.program.explanation
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- Yorumlar-->
+                <div class="comments-area">
+                    <h2>
+                        Yorumlar
+                        @if (Model.Yorumlar.Count != 0)
+                        {
+                            <span> @Model.Yorumlar.Count </span>
+                        }
+                    </h2>
+                    <hr>
+                    @if (Model.Yorumlar.Count == 0)
+                    {
+                        <div class="comment-list">
+                            <div class="alert alert-warning" style="width:100%;border:1px solid">
+                                <p style="color:#000;margin-top:10px;">
+                                    Bu programa henüz yorum yapılmamış...
+                                </p>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        foreach (var item in Model.Yorumlar)
+                        {
+                            <div class="comment-list">
+                                <div class="single-comment justify-content-between d-flex">
+                                    <div class="user justify-content-between d-flex">
+
+                                        <div class="desc">
+                                            <p class="comment">
+                                                @item.comment_content
+                                            </p>
+                                            <div class="d-flex justify-content-between">
+                                                <div class="d-flex align-items-center">
+                                                    <h5><a href="#">@item.user.username</a> </h5>
+                                                    <p class="date">@item.comment_time</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+                <h2> Yorum Yap </h2>
+                @if (Session["username"] != null)
+                {
+                    <!-- Yorum Yap-->
+                    <div class="comment-form">
+                        <form action="/programs/Details/@Model.program.program_id" method="post">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <textarea class="form-control w-100" required="required" name="comment" cols="30" rows="9" placeholder="Yorumunuzu Yazın..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="button button-contactForm btn_1 boxed-btn"> Yorum Yap </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Yorum Yap End-->
+                }
+                else
+                {
+                    <div class="alert alert-danger" style="border:1px solid"> Yorum yapmak için giriş yapmalısınız. Giriş yapmak için <a href="/users/login">tıklayınız.</a> </div>
+                }
+            </div>
+            <!--Kategoriler-->
+            <div class="col-lg-4">
+                <div class="blog_right_sidebar">
+                    <aside class="single_sidebar_widget post_category_widget">
+                        <h4 class="widget_title">Kategoriler</h4>
+                        <ul class="list cat-list">
+                            @foreach (var item in Model.Kategoriler.Take(4))
+                            {
+                                <li>
+                                    <a href="/categories/details/@item.category_id" class="d-flex">
+                                        <p> @item.category_name </p>
+                                    </a>
+                                </li>
+                            }
+
+                        </ul>
+                    </aside>
+                    <!--Kategoriler End -->
+                    <!-- Benzer Programlar -->
+                    <aside class="single_sidebar_widget post_category_widget">
+                        <h4 class="widget_title">Benzer Programlar</h4>
+                        <ul class="list cat-list">
+                            @{
+                                var prgKtgID = Model.program.category_id;
+                                var prgID = Model.program.program_id;
+
+                                foreach (var prg in Model.Programlar.Where(p => p.category_id == prgKtgID))
+                                {
+                                    if (prgID != prg.program_id)
+                                    {
+                                        <li>
+                                            <a href="/programs/details/@prg.program_id" class="d-flex">
+                                                <img src="~/Template/img/programs/@prg.iconS">
+                                                <p style="margin-left: 10px;margin-top: 5px;">@prg.program_name</p>
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            }
+                        </ul>
+                    </aside> <!-- Benzer Programlar -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

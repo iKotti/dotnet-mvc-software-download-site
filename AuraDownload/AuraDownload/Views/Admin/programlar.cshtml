@@ -1,0 +1,72 @@
+﻿@model IEnumerable<AuraDownload.Models.program>
+@{
+    ViewBag.Title = "Programlar | Admin Paneli | Aura Download";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<title> @ViewBag.Title</title>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title"> PROGRAMLAR </h3>
+            @Html.Raw(TempData["alert"])
+            <HR>
+            <a href="/admin/addProgram" class="btn btn-success"> Program Ekle </a>
+            <p class="card-description">
+            </p>
+            <div class="table-responsive pt-2" style="max-width: 90%;">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                Program Adı
+                            </th>
+                            <th>
+                                Kategori
+                            </th>
+                            <th>
+                                İndirilme Sayısı
+                            </th>
+                            <th>
+                                Yükleyen
+                            </th>
+                            <th style="text-align: center;">
+                                Sil
+                            </th>
+                        </tr>
+
+
+                    </thead>
+                    <tbody>
+                        @foreach (var prg in Model.OrderBy(p => p.program_name))
+                        {
+                            <tr>
+                                <td>
+                                    @prg.program_id
+                                </td>
+                                <td>
+                                    <a target="_blank" href="/programs/details/@prg.program_id"> @prg.program_name  </a>
+                                </td>
+                                <td>
+                                    <a target="_blank" href="/categories/Details/@prg.category_id"> @prg.category.category_name</a>
+                                </td>
+                                <td>
+                                    @prg.download_count
+                                </td>
+                                <td>
+                                    @prg.user.username
+                                </td>
+                                <td style="text-align: center;">
+                                    <a href="/admin/deleteProgram/@prg.program_id" class="btn btn-danger" style="color: #fff"> Sil </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
