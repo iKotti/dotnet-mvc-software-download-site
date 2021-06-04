@@ -4,8 +4,8 @@ Tanıtım videosuna <a href="https://github.com/iKotti/dotnet-mvc-software-downl
 Kullanılan Teknolojiler (Technologies)
 <ul>
 <li> Database : Microsoft SQL Server</li>
-<li> Backend : ASP.NET MVC Framework</li>
-<li> Frontend : HTML, CSS ve JavaScript </li>
+<li> Back-end : ASP.NET MVC Framework</li>
+<li> Front-end : HTML, CSS ve JavaScript </li>
 </ul>
 
 Admin Hesap Bilgileri (Admin Account)
