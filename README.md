@@ -1,6 +1,6 @@
 # Aura Download - Program İndirme Sitesi (Software Download Site) 
 
-Tanıtım videosuna <a href="https://github.com/iKotti/dotnet-mvc-software-download-site/blob/main/AuraDownload%20-%20Introduction.mp4"> buradan</a> erişebilirsiniz. <br><br>
+Tanıtım videosuna <a href="https://www.youtube.com/watch?v=suYQH1vhAGk"> buradan</a> erişebilirsiniz. <br><br>
 ## Kullanılan Teknolojiler (Technologies)
 <ul>
 <li> Database : Microsoft SQL Server</li>
