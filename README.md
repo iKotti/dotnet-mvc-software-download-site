@@ -1,7 +1,5 @@
 # Aura Download - Program İndirme Sitesi (Software Download Site) 
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/suYQH1vhAGk/0.jpg)](https://www.youtube.com/watch?v=suYQH1vhAGk)
-
 Tanıtım videosuna <a href="https://www.youtube.com/watch?v=suYQH1vhAGk"> buradan</a> erişebilirsiniz. <br><br>
 ## Kullanılan Teknolojiler (Technologies)
 <ul>
